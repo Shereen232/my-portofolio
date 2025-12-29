@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Professional | Dicky Ilmansyah</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Link ke CSS dan JS yang sudah di-build -->
+    <link rel="stylesheet" href="assets/app-Bb1cchPk.css">
+    <script type="module" src="assets/app-CAiCLEjY.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+        h1, h2, h3 { font-family: 'Merriweather', serif; }
+
+        /* Full-page sections */
+        section {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Custom Gradient Text */
+        .gradient-text {
+            background: linear-gradient(to right, #4f46e5, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animasi Garis Bawah Menu */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #4f46e5;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #4f46e5;
+        }
+
+        /* Enhanced Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(79, 70, 229, 0.6); }
+        }
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        /* Scroll-triggered animations */
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes rotateIn {
+            from { transform: rotate(-10deg) scale(0.8); opacity: 0; }
+            to { transform: rotate(0deg) scale(1); opacity: 1; }
+        }
+
+        /* Classes for scroll-triggered animations */
+        .animate-in[data-aos="fade-left"] {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        .animate-in[data-aos="fade-right"] {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+        .animate-in[data-aos="fade-up"] {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+        .animate-in[data-aos="zoom-in"] {
+            animation: scaleIn 0.8s ease-out forwards;
+        }
+        .animate-in[data-aos="fade-in"] {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        /* Reset animation when element leaves viewport */
+        .animate-in:not(.animate-in) {
+            animation: none;
+            opacity: 0;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .mobile-menu a {
+            color: white;
+            font-size: 2rem;
+            margin: 1rem;
+            text-decoration: none;
+        }
+
+        /* Additional animations */
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
+
+    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#about" class="text-2xl font-bold text-slate-900 tracking-tighter group">
+                Dev<span class="text-indigo-600 group-hover:text-teal-500 transition-colors duration-300">.Portfolio</span>
+            </a>
+
+            <ul class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#education" class="nav-link">Resume</a></li>
+                <li>
+                    <a href="#contact" class="px-6 py-2.5 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/30">
+                        Hire Me
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#education" class="nav-link">Resume</a>
+        <a href="#contact" class="nav-link px-6 py-2 bg-indigo-600 text-white rounded-full">Hire Me</a>
+    </div>
+
+    <header id="about" class="bg-gradient-to-br from-slate-50 via-indigo-50/30 to-teal-50/20 px-6 min-h-screen flex items-center">
+        <div class="max-w-6xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Column: Photo and Basic Info -->
+                <div class="order-2 lg:order-1" data-aos="fade-right" data-aos-delay="100">
+                    <div class="relative">
+                        <!-- Profile Photo -->
+                        <div class="relative w-80 h-80 mx-auto lg:mx-0 animate-float">
+                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-400 to-teal-400 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                            <div class="relative w-full h-full rounded-full overflow-hidden border-8 border-white shadow-2xl hover-lift">
+                                <img src="assets/images/profile.png" alt="Dicky Ilmansyah Profile" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Floating Elements -->
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center shadow-lg animate-bounce animate-glow" style="animation-delay: 1s;">
+                                <span class="text-white text-2xl">💻</span>
+                            </div>
+                            <div class="absolute -bottom-4 -left-4 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center shadow-lg animate-bounce animate-glow" style="animation-delay: 2s;">
+                                <span class="text-white text-xl">🚀</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+                        <div class="bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-slate-200 hover-lift animate-float" style="animation-delay: 0.5s;">
+                            <div class="text-2xl font-bold text-indigo-600 counter" data-target="3">3+</div>
+                            <div class="text-xs text-slate-600 font-medium">Years Experience</div>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-slate-200 hover-lift animate-float" style="animation-delay: 1s;">
+                            <div class="text-2xl font-bold text-teal-600 counter" data-target="15">15+</div>
+                            <div class="text-xs text-slate-600 font-medium">Projects Done</div>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-slate-200 hover-lift animate-float" style="animation-delay: 1.5s;">
+                            <div class="text-2xl font-bold text-purple-600 counter" data-target="5">5+</div>
+                            <div class="text-xs text-slate-600 font-medium">Certifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Detailed Info -->
+                <div class="order-1 lg:order-2 text-center lg:text-left" data-aos="fade-left" data-aos-delay="200">
+                    <div class="inline-block py-1 px-3 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold tracking-wider mb-6 hover:bg-indigo-200 transition cursor-default">
+                        AVAILABLE FOR WORK
+                    </div>
+
+                    <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6 text-slate-900">
+                        Hi, I'm <span class="gradient-text">Dicky Ilmansyah</span>
+                        <br>
+                        <span class="text-2xl lg:text-3xl font-medium text-slate-600">Backend Developer & IT Support</span>
+                    </h1>
+
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl">
+                        Saya adalah profesional IT dengan pengalaman lebih dari 3 tahun dalam pengembangan aplikasi web dan dukungan teknis.
+                        Spesialis dalam framework PHP seperti Laravel dan CodeIgniter, dengan keahlian dalam manajemen database MySQL,
+                        networking, dan troubleshooting hardware. Saya percaya bahwa teknologi harus menyederhanakan kehidupan,
+                        dan saya berkomitmen untuk menciptakan solusi yang aman, efisien, dan user-friendly.
+                    </p>
+
+                    <!-- Key Highlights -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                        <div class="flex items-center gap-3 text-slate-700">
+                            <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium">Full-Stack Development</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-700">
+                            <div class="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium">Performance Optimization</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-700">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium">Security Focused</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-700">
+                            <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium">Team Collaboration</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#projects" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-teal-600 text-white rounded-full font-semibold hover:from-indigo-700 hover:to-teal-700 transition-all transform hover:scale-105 hover:shadow-2xl shadow-indigo-500/30 overflow-hidden animate-gradient">
+                            <span class="relative z-10">Explore My Portfolio</span>
+                            <svg class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1yfOnEek7aZg79axEBAYot622kWcMhB_B/view?usp=sharing" target="_blank" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 border-2 border-slate-300 rounded-full font-semibold hover:border-purple-600 hover:text-purple-600 transition-all transform hover:scale-105 hover:shadow-lg hover-lift">
+                            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span>My Resume</span>
+                        </a>
+                        <a href="#contact" class="px-8 py-4 bg-white text-slate-900 border-2 border-slate-300 rounded-full font-semibold hover:border-indigo-600 hover:text-indigo-600 transition-all transform hover:scale-105 hover:shadow-lg hover-lift">
+                            Get In Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce" data-aos="fade-in" data-aos-delay="500">
+                <div class="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center">
+                    <div class="w-1 h-3 bg-slate-400 rounded-full mt-2 animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sisanya dari konten portfolio akan ditambahkan di sini -->
+    <section id="skills" class="bg-white px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-slate-800" data-aos="fade-up">Technical Skills</h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">🐘</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">PHP Native</h3>
+                    <p class="text-xs text-slate-500 mt-2">Procedural & OOP</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">🔥</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">CodeIgniter 4</h3>
+                    <p class="text-xs text-slate-500 mt-2">MVC Framework</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">🚀</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">Laravel</h3>
+                    <p class="text-xs text-slate-500 mt-2">Full-Stack Framework</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">🐬</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">MySQL / SQL</h3>
+                    <p class="text-xs text-slate-500 mt-2">Database Management</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">🌐</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">HTML/CSS/JS</h3>
+                    <p class="text-xs text-slate-500 mt-2">Frontend Basics</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">⚙️</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">Git & GitHub</h3>
+                    <p class="text-xs text-slate-500 mt-2">Version Control</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">🖥️</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">IT Support</h3>
+                    <p class="text-xs text-slate-500 mt-2">Hardware & Networking</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 text-center group" data-aos="zoom-in" data-aos-delay="800">
+                    <div class="text-4xl mb-3 transform group-hover:scale-110 transition duration-300">📊</div>
+                    <h3 class="font-bold font-sans text-slate-700 group-hover:text-indigo-600 transition">Data Analysis</h3>
+                    <p class="text-xs text-slate-500 mt-2">Excel & Reporting</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="bg-slate-50 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-slate-900 font-serif">Work Experience</h2>
+                <p class="text-slate-500 mt-2">Perjalanan karir dan pengalaman profesional saya dalam bidang IT.</p>
+            </div>
+
+            <div class="relative">
+                <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-indigo-200"></div>
+
+                <div class="space-y-12">
+                    <div class="relative flex items-start gap-8" data-aos="fade-right" data-aos-delay="100">
+                        <div class="flex-shrink-0 w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1 bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-900">Freelance Web Developer</h3>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 text-sm font-bold rounded-full mt-2 md:mt-0"> Jan 2025 - Present</span>
+                            </div>
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                Merancang dan membangun aplikasi web kustom menggunakan Laravel dan CodeIgniter 4 sesuai kebutuhan klien. 
+                                Fokus pada pengembangan fitur backend yang handal, manajemen database MySQL yang efisien, serta memastikan keamanan sistem dan deployment server.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">Laravel</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">MySQL</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">CI 4</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">Git</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-start gap-8" data-aos="fade-left" data-aos-delay="200">
+                        <div class="flex-shrink-0 w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1 bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-900">Content Creator and Data Analyst</h3>
+                                    <p class="text-teal-600 font-semibold">KN Denim</p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-teal-50 text-teal-700 text-sm font-bold rounded-full mt-2 md:mt-0"> Apr 2025 - Jun 2025</span>
+                            </div>
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                Merancang strategi konten kreatif untuk meningkatkan brand awareness dan engagement digital. 
+                                Mengumpulkan dan menganalisis data tren pasar serta performa konten menggunakan tools analitik untuk memberikan wawasan strategis bagi pengembangan bisnis.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">Editing</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">Microsoft Office</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">AI Generate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-start gap-8" data-aos="fade-right" data-aos-delay="300">
+                        <div class="flex-shrink-0 w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1 bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-900">IT Staff and Data Analyst</h3>
+                                    <p class="text-purple-600 font-semibold">Dinas Kesehatan Kab. Pekalongan</p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-purple-50 text-purple-700 text-sm font-bold rounded-full mt-2 md:mt-0">Mar 2024 - Mei 2024</span>
+                            </div>
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                Melakukan pemeliharaan perangkat keras (hardware) dan jaringan komputer untuk mendukung operasional dinas.
+                                Bertanggung jawab atas input, validasi, dan pengolahan data kesehatan menggunakan Microsoft Excel guna menyusun laporan kinerja yang akurat.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">IT Maintenance</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">Data Analyst</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full">Microsoft Office</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="bg-white px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4" data-aos="fade-right">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900">Featured Projects</h2>
+                    <p class="text-slate-500 mt-2">Beberapa sistem yang pernah saya kerjakan (Open Source).</p>
+                </div>
+                <a href="https://github.com/Shereen232?tab=repositories" target="_blank" class="inline-flex items-center gap-2 text-indigo-600 font-semibold hover:underline bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition transform hover:-translate-y-0.5">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                    Lihat GitHub Saya &rarr;
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 flex flex-col group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-48 bg-slate-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 z-10">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" alt="Coffee Shop System" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex gap-2 mb-4">
+                            <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-bold rounded-full">CI 4</span>
+                            <span class="px-3 py-1 bg-teal-50 text-teal-600 text-xs font-bold rounded-full">MySQL</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 font-sans group-hover:text-indigo-600 transition">Sistem Manajemen Coffee Shop</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-1">Sistem kasir (POS) dan manajemen stok bahan baku dan penjualan dengan laporan otomatis.</p>
+                        <a href="https://github.com/Shereen232/coffe-shop-order.git" target="_blank" class="text-indigo-600 font-semibold text-sm hover:text-indigo-800 transition flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            Source Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 flex flex-col group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-48 bg-slate-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 z-10">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="E-Commerce" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full">Laravel</span>
+                            <span class="px-3 py-1 bg-orange-50 text-orange-600 text-xs font-bold rounded-full">MySQL</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 font-sans group-hover:text-indigo-600 transition">Dimensi Peka</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-1">Sistem informasi kuisioner untuk mendeteksi adanya permasalahan pada remaja</p>
+                        <a href="https://github.com/Shereen232/dimensi-peka.git" target="_blank" class="text-indigo-600 font-semibold text-sm hover:text-indigo-800 transition flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            Source Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 flex flex-col group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-48 bg-slate-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 z-10">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" alt="Networking" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">CI 4</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">MySQL</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 font-sans group-hover:text-indigo-600 transition">Sistem Informasi Booking Lapangan</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex-1">Sistem Pemesanan Lapangan via web yang terintegrasi</p>
+                        <a href="https://github.com/Shereen232/booking-lapangan.git" target="_blank" class="text-indigo-600 font-semibold text-sm hover:text-indigo-800 transition flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Lihat Dokumentasi
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="bg-slate-50 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-slate-900 font-serif">Riwayat & Pencapaian</h2>
+                <p class="text-slate-500 mt-2">Latar belakang akademis dan sertifikasi profesional yang telah saya raih.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+
+                <div class="p-8 rounded-3xl border border-slate-100 bg-slate-50/50 hover:shadow-md transition" data-aos="fade-right" data-aos-delay="100">
+                    <h3 class="flex items-center text-xl font-bold text-slate-800 mb-8 gap-3">
+                        <span class="flex items-center justify-center w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full shadow-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
+                        </span>
+                        Pendidikan Formal
+                    </h3>
+
+                    <div class="relative border-l-2 border-indigo-200 ml-4 pl-8 space-y-10">
+                        <div class="relative">
+                            <span class="absolute -left-[39px] top-1 h-5 w-5 rounded-full border-4 border-white bg-indigo-600 shadow ring-4 ring-indigo-50"></span>
+                            <h4 class="text-lg font-bold text-slate-900">S1 Teknik Informatika</h4>
+                            <p class="text-indigo-600 font-medium text-sm mb-1">Institut Widya Pratama Pekalongan</p>
+                            <span class="inline-block px-2 py-1 bg-slate-200 text-slate-600 text-[10px] font-bold rounded uppercase tracking-wider mb-2">Lulus 2025</span>
+                            <p class="text-slate-500 text-sm leading-relaxed">
+                                Teknik Informatika . IPK 3.85/4.0
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[39px] top-1 h-5 w-5 rounded-full border-4 border-white bg-slate-400"></span>
+                            <h4 class="text-lg font-bold text-slate-900">SMK Negeri 1 Kedungwuni</h4>
+                            <p class="text-slate-600 font-medium text-sm mb-1">Jurusan Teknik Komputer dan Jaringan</p>
+                            <span class="inline-block px-2 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase tracking-wider">2018 - 2021</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="flex items-center text-xl font-bold text-slate-800 mb-6 gap-3 ml-2">
+                        <span class="flex items-center justify-center w-10 h-10 bg-teal-100 text-teal-600 rounded-full shadow-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </span>
+                        Sertifikasi & Penghargaan
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="group flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1 transition duration-300">
+                            <div class="bg-indigo-50 text-indigo-600 p-3 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 group-hover:text-indigo-600 transition">Junior Web Developer</h4>
+                                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-1">BNSP • 2024</p>
+                                <p class="text-sm text-slate-600">Sertifikasi kompetensi nasional untuk pengembangan web berbasis PHP & MySQL.</p>
+                            </div>
+                        </div>
+
+                        <div class="group flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 hover:border-teal-500 hover:shadow-lg hover:-translate-y-1 transition duration-300">
+                            <div class="bg-teal-50 text-teal-600 p-3 rounded-xl group-hover:bg-teal-600 group-hover:text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 group-hover:text-teal-600 transition">Juara 2 Lomba Web Design</h4>
+                                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-1">Universitas Nasional • 2023</p>
+                                <p class="text-sm text-slate-600">Kompetisi merancang UI/UX aplikasi mobile yang user-friendly.</p>
+                            </div>
+                        </div>
+
+                        <div class="group flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 hover:border-purple-500 hover:shadow-lg hover:-translate-y-1 transition duration-300">
+                            <div class="bg-purple-50 text-purple-600 p-3 rounded-xl group-hover:bg-purple-600 group-hover:text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 group-hover:text-purple-600 transition">Workshop Laravel Advanced</h4>
+                                <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-1">Dicoding • 2024</p>
+                                <p class="text-sm text-slate-600">Pelatihan lanjutan framework Laravel untuk pengembangan aplikasi enterprise.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2 animate-blob"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-teal-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 translate-x-1/2 translate-y-1/2 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Tertarik bekerja sama?</h2>
+            <p class="text-slate-400 mb-8 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">Saya selalu terbuka untuk mendiskusikan proyek pengembangan sistem atau peluang karir.</p>
+
+            <a href="mailto:dickyilmanyah504@gmail.com" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:-translate-y-1 hover:shadow-lg shadow-indigo-500/50 mr-4" data-aos="zoom-in" data-aos-delay="200">
+                Kirim Email
+            </a>
+
+            <a href="https://wa.me/6289653797645" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:-translate-y-1 hover:shadow-lg shadow-green-500/50" data-aos="zoom-in" data-aos-delay="200">
+                WhatsApp
+            </a>
+
+            <div class="mt-20 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500" data-aos="fade-up" data-aos-offset="0">
+                <p>&copy; 2025 Dicky Ilmansyah. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="https://linkedin.com/in/" class="hover:text-white transition transform hover:scale-110">LinkedIn</a>
+                    <a href="https://github.com/Shereen232" class="hover:text-white transition transform hover:scale-110">GitHub</a>
+                    <a href="https://instagram.com/d_ilmansyah7" class="hover:text-white transition transform hover:scale-110">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // JavaScript untuk interaktivitas portfolio
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: false,
+            offset: 100,
+        });
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target + '+';
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + '+';
+                    }
+                }, 16);
+            });
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Highlight active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let scrollY = window.pageYOffset;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        window.addEventListener('load', () => {
+            highlightNav();
+            animateCounters();
+        });
+    </script>
+</body>
+</html>
