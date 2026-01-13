@@ -35,6 +35,7 @@
         /* Custom Gradient Text */
         .gradient-text {
             background: linear-gradient(to right, #4f46e5, #06b6d4);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -175,10 +176,35 @@
         .hover-lift:hover {
             transform: translateY(-4px);
         }
+
+        /* Typing Animation */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: currentColor; }
+        }
+        .typing {
+            overflow: hidden;
+            border-right: 2px solid;
+            white-space: nowrap;
+        }
+        .start-typing {
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        /* Responsive adjustments for typing animation */
+        @media (max-width: 768px) {
+            .start-typing {
+                animation: typing 5s steps(30, end), blink-caret 0.75s step-end infinite;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
-
+<canvas id="fluid-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-[9999]"></canvas>
     <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#about" class="text-2xl font-bold text-slate-900 tracking-tighter group">
@@ -217,14 +243,19 @@
         <a href="#contact" class="nav-link px-6 py-2 bg-indigo-600 text-white rounded-full">Hire Me</a>
     </div>
 
-    <header id="about" class="bg-gradient-to-br from-slate-50 via-indigo-50/30 to-teal-50/20 px-6 min-h-screen flex items-center">
-        <div class="max-w-6xl mx-auto w-full">
+    <br>
+    <br>
+    <br>
+    <br>
+   <header id="about" class="bg-gradient-to-br from-slate-50 via-indigo-50/30 to-teal-50/20 px-6 pt-32 pb-12 lg:pt-48 min-h-screen flex items-start lg:items-center">
+    
+    <div class="max-w-6xl mx-auto w-full mt-10 lg:mt-24">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Column: Photo and Basic Info -->
-                <div class="order-2 lg:order-1" data-aos="fade-right" data-aos-delay="100">
+                <div class="order-1 lg:order-1" data-aos="fade-right" data-aos-delay="100">
                     <div class="relative">
                         <!-- Profile Photo -->
-                        <div class="relative w-80 h-80 mx-auto lg:mx-0 animate-float">
+                        <div class="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto lg:mx-0 animate-float">
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-400 to-teal-400 rounded-full blur-2xl opacity-30 animate-pulse"></div>
                             <div class="relative w-full h-full rounded-full overflow-hidden border-8 border-white shadow-2xl hover-lift">
                                 <img src="assets/images/profile.png" alt="Dicky Ilmansyah Profile" class="w-full h-full object-cover">
@@ -257,7 +288,7 @@
                 </div>
 
                 <!-- Right Column: Detailed Info -->
-                <div class="order-1 lg:order-2 text-center lg:text-left" data-aos="fade-left" data-aos-delay="200">
+                <div class="order-2 lg:order-2 text-center lg:text-left" data-aos="fade-left" data-aos-delay="200">
                     <div class="inline-block py-1 px-3 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold tracking-wider mb-6 hover:bg-indigo-200 transition cursor-default">
                         AVAILABLE FOR WORK
                     </div>
@@ -265,7 +296,7 @@
                     <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6 text-slate-900">
                         Hi, I'm <span class="gradient-text">Dicky Ilmansyah</span>
                         <br>
-                        <span class="text-2xl lg:text-3xl font-medium text-slate-600">Backend Developer & IT Support</span>
+                        <span id="typing-text" class="text-2xl lg:text-3xl font-medium text-slate-600 typing">Backend Developer & IT Support</span>
                     </h1>
 
                     <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl">
@@ -343,7 +374,7 @@
 
     <!-- Sisanya dari konten portfolio akan ditambahkan di sini -->
     <section id="skills" class="bg-white px-6">
-        <div class="max-w-6xl mx-auto">
+        <div class="tilt-card p-6 bg-slate-50 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-6xl mx-auto" data-aos="fade-up">
             <h2 class="text-3xl font-bold mb-12 text-center text-slate-800" data-aos="fade-up">Technical Skills</h2>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -672,7 +703,7 @@
             </div>
         </div>
     </section>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // JavaScript untuk interaktivitas portfolio
@@ -702,6 +733,21 @@
                     }
                 }, 16);
             });
+        }
+
+        // Typing animation trigger on scroll
+        const typingElement = document.getElementById('typing-text');
+        if (typingElement) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        typingElement.classList.add('start-typing');
+                        observer.unobserve(typingElement);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(typingElement);
         }
 
         // Mobile menu toggle
@@ -746,6 +792,131 @@
             highlightNav();
             animateCounters();
         });
+
+
+    VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+        max: 15, // Kemiringan maksimal
+        speed: 400, // Kecepatan efek
+        glare: true, // Efek kilau cahaya
+        "max-glare": 0.3,
+    });
+
+    // Script Scroll Progress Bar
+
+    const canvas = document.getElementById('fluid-canvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    // Atur ukuran canvas sesuai layar
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let hue = 0; // Untuk rotasi warna
+
+    // Handle resize window
+    window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // Object Mouse untuk melacak posisi
+    const mouse = {
+        x: undefined,
+        y: undefined,
+    }
+
+    // Event listener saat mouse bergerak
+    window.addEventListener('mousemove', function(event) {
+        mouse.x = event.x;
+        mouse.y = event.y;
+        
+        // Buat beberapa partikel sekaligus agar terlihat seperti cairan kental
+        for (let i = 0; i < 2; i++) {
+            particlesArray.push(new Particle());
+        }
+    });
+
+    // Class Particle (Tetesan Tinta/Air)
+    class Particle {
+        constructor() {
+            this.x = mouse.x;
+            this.y = mouse.y;
+            
+            // Ukuran acak untuk kesan natural
+            this.size = Math.random() * 8 + 1; 
+            
+            // Kecepatan & Arah (menyebar seperti tinta di air)
+            this.speedX = Math.random() * 3 - 1.5;
+            this.speedY = Math.random() * 3 - 1.5;
+            
+            // Warna: Menggunakan HSL untuk efek pelangi/air yang dinamis
+            // Jika ingin warna air saja (biru/teal), ganti baris bawah ini.
+            this.color = 'hsl(' + hue + ', 100%, 50%)'; 
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            // Efek partikel mengecil perlahan (memudar)
+            if (this.size > 0.2) this.size -= 0.1;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function handleParticles() {
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+            particlesArray[i].draw();
+
+            // Hubungkan partikel yang berdekatan untuk efek "cairan" yang menyatu
+            for (let j = i; j < particlesArray.length; j++) {
+                const dx = particlesArray[i].x - particlesArray[j].x;
+                const dy = particlesArray[i].y - particlesArray[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = particlesArray[i].color;
+                    ctx.lineWidth = 0.2; // Garis tipis penghubung
+                    ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                    ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                    ctx.stroke();
+                }
+            }
+
+            // Hapus partikel jika sudah sangat kecil
+            if (particlesArray[i].size <= 0.3) {
+                particlesArray.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+    function animate() {
+        // Efek trail (jejak) - ganti 0.1 dengan angka lebih kecil untuk jejak lebih panjang
+        // rgba(255, 255, 255, 0.1) membuat efek pudar transparan
+        // Ganti '255, 255, 255' dengan warna background website Anda (disini putih/slate-50)
+        // agar terlihat seperti melukis di atas kertas/air.
+        ctx.fillStyle = 'rgba(248, 250, 252, 0.2)'; // Sesuai warna bg-slate-50
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        handleParticles();
+        hue += 2; // Ganti warna seiring waktu
+        requestAnimationFrame(animate);
+    }
+
+    particlesArray = [];
+    animate();
+
+
+
     </script>
 </body>
 </html>
